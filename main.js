@@ -21,15 +21,15 @@ function createWindow() {
       contextIsolation: false,
     },
   });
-  secondWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
-    },
-  });
+  // secondWindow = new BrowserWindow({
+  //   width: 800,
+  //   height: 600,
+  //   webPreferences: {
+  //     nodeIntegration: true,
+  //     contextIsolation: false,
+  //     enableRemoteModule: true,
+  //   },
+  // });
 
   mainWindow.loadURL(
     url.format({
@@ -38,25 +38,25 @@ function createWindow() {
       slashes: true,
     })
   );
-  secondWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "second.html"),
-      protocol: "file:",
-      slashes: true,
-    })
-  );
+  // secondWindow.loadURL(
+  //   url.format({
+  //     pathname: path.join(__dirname, "second.html"),
+  //     protocol: "file:",
+  //     slashes: true,
+  //   })
+  // );
 
   mainWindow.webContents.openDevTools();
-  secondWindow.webContents.openDevTools();
+  // secondWindow.webContents.openDevTools();
 
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
-  require("@electron/remote/main").enable(secondWindow.webContents);
+  // require("@electron/remote/main").enable(secondWindow.webContents);
 
-  secondWindow.on("closed", function () {
-    secondWindow = null;
-  });
+  // secondWindow.on("closed", function () {
+  //   secondWindow = null;
+  // });
 }
 
 app.on("ready", createWindow);
