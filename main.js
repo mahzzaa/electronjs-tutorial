@@ -7,6 +7,8 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const url = require("url");
 
+require("@electron/remote/main").initialize();
+
 let mainWindow;
 let secondWindow;
 
@@ -16,16 +18,17 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   });
   secondWindow = new BrowserWindow({
-    width: 400,
-    height: 300,
+    width: 800,
+    height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
   });
 
   mainWindow.loadURL(
@@ -49,6 +52,8 @@ function createWindow() {
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
+  require("@electron/remote/main").enable(secondWindow.webContents);
+
   secondWindow.on("closed", function () {
     secondWindow = null;
   });
