@@ -1,4 +1,11 @@
-const { app, BrowserWindow, Menu, shell, MenuItem } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  shell,
+  MenuItem,
+  globalShortcut,
+} = require("electron");
 const path = require("path");
 const url = require("url");
 let mainWindow;
@@ -69,6 +76,7 @@ app.on("ready", function () {
           click: function () {
             shell.openExternal("https://www.electronjs.org/docs/latest");
           },
+          accelerator: "CmdOrCtrl+H",
         },
       ],
     },
@@ -99,12 +107,24 @@ app.on("ready", function () {
     new MenuItem({
       label: "Select All",
       role: "selectAll",
+      accelerator: "CmdOrCtrl+A",
     })
   );
 
   mainWindow.webContents.on("context-menu", (e, params) => {
     contextMenu.popup(mainWindow, params.x, params.y);
   });
+
+  globalShortcut.register("CmdOrCtrl+R", () => {
+    mainWindow.reload();
+  });
+  globalShortcut.register("CmdOrCtrl+O", () => {
+    mainWindow.show();
+  });
+});
+
+app.on("will-quit", () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on("window-all-closed", function () {
