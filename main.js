@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell, MenuItem } = require("electron");
 const path = require("path");
 const url = require("url");
 let mainWindow;
@@ -75,6 +75,36 @@ app.on("ready", function () {
   ];
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+
+  const contextMenu = new Menu();
+  contextMenu.append(
+    new MenuItem({
+      label: "Cut",
+      role: "cut",
+    })
+  );
+  contextMenu.append(
+    new MenuItem({
+      label: "Copy",
+      role: "copy",
+    })
+  );
+  contextMenu.append(
+    new MenuItem({
+      label: "Paste",
+      role: "paste",
+    })
+  );
+  contextMenu.append(
+    new MenuItem({
+      label: "Select All",
+      role: "selectAll",
+    })
+  );
+
+  mainWindow.webContents.on("context-menu", (e, params) => {
+    contextMenu.popup(mainWindow, params.x, params.y);
+  });
 });
 
 app.on("window-all-closed", function () {
