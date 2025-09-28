@@ -1,7 +1,6 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 const path = require("path");
 const url = require("url");
-
 let mainWindow;
 
 function createWindow() {
@@ -33,7 +32,50 @@ function createWindow() {
   });
 }
 
-app.on("ready", createWindow);
+app.on("ready", function () {
+  createWindow();
+  const template = [
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "Quit",
+          accelerator: "CmdOrCtrl+Q",
+          click() {
+            app.quit();
+          },
+        },
+      ],
+    },
+    {
+      label: "Edit",
+      submenu: [
+        { role: "undo" },
+        { role: "redo" },
+        { type: "separator" },
+        { role: "cut" },
+        { role: "copy" },
+        { role: "paste" },
+        { role: "delete" },
+        { type: "separator" },
+        { role: "selectAll" },
+      ],
+    },
+    {
+      label: "Help",
+      submenu: [
+        {
+          label: "Electron Documentation",
+          click: function () {
+            shell.openExternal("https://www.electronjs.org/docs/latest");
+          },
+        },
+      ],
+    },
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+});
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") {
