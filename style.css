@@ -3,6 +3,7 @@ body {
   color: white;
   font-family: Arial, sans-serif;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -23,4 +24,19 @@ body {
 #quote-author {
   font-size: 1.2em;
   font-style: italic;
+}
+
+#openBtn {
+  -webkit-app-region: no-drag;
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#openBtn:hover {
+  background-color: #005999;
 }

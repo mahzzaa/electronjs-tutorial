@@ -35,4 +35,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     );
   }, 10000);
+
+  // Open button functionality
+  const openBtn = document.getElementById("openBtn");
+
+  if (openBtn) {
+    const { shell } = require("electron");
+
+    openBtn.addEventListener("click", function (event) {
+      shell.showItemInFolder("/Users/masha/Desktop");
+      shell.openPath("/Users/masha/Desktop/steam.png");
+    });
+
+    console.log("Click listener added");
+  } else {
+    console.log("Button not found!");
+  }
 });
